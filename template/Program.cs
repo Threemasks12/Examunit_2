@@ -44,13 +44,16 @@ static List<string> GetUniqueWordsList(string parameterString)
     return uniqueWordsList;
 }
 
-var answer1 = GetUniqueWordsList(parameters);
+var answer1 = uniqueWordsList;
 
-Response task1AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, answer1.ToString());
+Response task1AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer1)}");
 Console.WriteLine($"Answer: {Colors.Green}{task1AnswerResponse}{ANSICodes.Reset}");
 
-taskID = "";
+taskID = "psu31_4";
 
+Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
+Task task2 = JsonSerializer.Deserialize<Task>(task2Response.content);
+Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task2?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task2?.parameters}{ANSICodes.Reset}");
 
 class Task
 {
