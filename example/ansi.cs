@@ -1,4 +1,6 @@
+/*
 namespace AnsiTools
+
 {
 
 
@@ -42,3 +44,4 @@ namespace AnsiTools
 
     }
 }
+*/
