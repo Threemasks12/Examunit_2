@@ -1,4 +1,5 @@
 /*
+
 using HTTPUtils;
 using System.Text.Json;
 using AnsiTools;
@@ -22,35 +23,6 @@ Response startRespons = await httpUtils.Get(baseURL + startEndpoint + myPersonal
 Console.WriteLine($"Start:\n{Colors.Magenta}{startRespons}{ANSICodes.Reset}\n\n"); // Print the response from the server to the console
 string taskID = "otYK2"; // We get the taskID from the previous response and use it to get the task (look at the console output to find the taskID)
 
-//#### FIRST TASK 
-// Fetch the details of the task from the server.
-Response task1Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
-Console.WriteLine(task1Response);
-
-//#### SECOND TASK
-// Fetch the details of the task from the server.
-Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
-Task task2 = JsonSerializer.Deserialize<Task>(task2Response.content);
-Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task2?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task2?.parameters}{ANSICodes.Reset}");
-
-string inputString = "Whippersnapper,Malarkey,Flabbergasted,Balderdash,Lollygag,Hullabaloo,Flibbertigibbet,Hullabaloo";
-
-
-static List<string> GetUniqueWords(string input)
-{
-    string[] words = inputString.Split(',');
-    Hashset<string> hashset = new Hashset<string>(words);
-    List<string> uniqueWordsList = uniqueWordsSet.ToList();
-    uniqueWordsSet.Sort();
-    return uniqueWordsList;
-}
-
-
-
-var answer2 = task2.parameters.Contains("Unique words") ? "I scream for ice cream" : "I will have a cup of tea";
-// Send the answer to the server
-Response task2AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, answer2);
-Console.WriteLine($"\nAnswer: {Colors.Green}{task2AnswerResponse}{ANSICodes.Reset}");
 
 
 
