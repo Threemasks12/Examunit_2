@@ -21,8 +21,7 @@ Response startRespons = await httpUtils.Get(baseURL + startEndpoint + myPersonal
 Console.WriteLine($"Start:\n{Colors.Magenta}{startRespons}{ANSICodes.Reset}\n\n"); // Print the response from the server to the console
 string taskID = "otYK2"; // We get the taskID from the previous response and use it to get the task (look at the console output to find the taskID)
 
-//#### FIRST TASK 
-// Fetch the details of the task from the server.
+// FIRST TASK 
 Response task1Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
 Console.WriteLine(task1Response);
 
@@ -51,9 +50,23 @@ Console.WriteLine($"Answer: {Colors.Green}{task1AnswerResponse}{ANSICodes.Reset}
 
 taskID = "psu31_4";
 
+
+// SECOUND TASKS
 Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
 Task task2 = JsonSerializer.Deserialize<Task>(task2Response.content);
 Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task2?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task2?.parameters}{ANSICodes.Reset}");
+
+int numberParameters = task2.parameters;
+
+
+
+
+
+var answer2 = uniqueNumbers;
+
+Response task1AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer2)}");
+Console.WriteLine($"Answer: {Colors.Green}{task1AnswerResponse}{ANSICodes.Reset}");
+
 
 class Task
 {
