@@ -50,22 +50,46 @@ Console.WriteLine($"Answer: {Colors.Green}{task1AnswerResponse}{ANSICodes.Reset}
 
 taskID = "psu31_4";
 
+Console.WriteLine("\n----------------------------------------------------------------------\n");
+
 
 // SECOUND TASKS
 Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
 Task task2 = JsonSerializer.Deserialize<Task>(task2Response.content);
 Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task2?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task2?.parameters}{ANSICodes.Reset}");
 
-int numberParameters = task2.parameters;
+string numberParameters = task2.parameters;
+
+string[] numberString = numberParameters.Split(',');
+
+int sum = 0;
+
+foreach (string numStr in numberString)
+{
+    string trimmedNumbersString = numStr.Trim();
+
+    if(int.TryParse(trimmedNumbersString, out int number))
+    {
+        sum += number;
+    }
+}
+
+var answer2 = sum;
+Response task2AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer2)}");
+Console.WriteLine($"Answer: {Colors.Cyan}{task2AnswerResponse}{ANSICodes.Reset}");
 
 
+taskID = "rEu25ZX";
+
+Console.WriteLine("\n----------------------------------------------------------------------\n");
 
 
+// THIRD TASK
+Response task3Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
+Task task3 = JsonSerializer.Deserialize<Task>(task3Response.content);
+Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task3?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task3?.parameters}{ANSICodes.Reset}");
 
-var answer2 = uniqueNumbers;
 
-Response task1AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer2)}");
-Console.WriteLine($"Answer: {Colors.Green}{task1AnswerResponse}{ANSICodes.Reset}");
 
 
 class Task
