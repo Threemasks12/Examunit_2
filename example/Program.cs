@@ -39,6 +39,7 @@ taskID = "bbb"; // We get the taskID from the previous response and use it to ge
 
 Console.WriteLine("\n-----------------------------------\n");
 
+
 //#### SECOND TASK
 // Fetch the details of the task from the server.
 Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server

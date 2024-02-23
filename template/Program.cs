@@ -88,7 +88,7 @@ Console.WriteLine("\n-----------------------------------------------------------
 // THIRD TASK
 Response task3Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); 
 Task task3 = JsonSerializer.Deserialize<Task>(task3Response.content);
-Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task3?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task3?.parameters}{ANSICodes.Reset}");
+Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task3?.title}{ANSICodes.Reset}\n{task3?.description}\nParameters: {Colors.Yellow}{task3?.parameters}{ANSICodes.Reset}");
 
 string romanParameters = task3.parameters;
 
@@ -131,14 +131,36 @@ var answer3 = RomanToArabic(romanParameters); ;
 Response task3AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer3)}");
 Console.WriteLine($"Answer: {Colors.Blue}{task3AnswerResponse}{ANSICodes.Reset}");
 
-taskID = "";
+taskID = "aLp96";
 
 Console.WriteLine("\n----------------------------------------------------------------------\n");
 
 // FOURTH TASK
 
+Response task4Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); 
+Task task4 = JsonSerializer.Deserialize<Task>(task4Response.content);
+Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task4?.title}{ANSICodes.Reset}\n{task4?.description}\nParameters: {Colors.Yellow}{task4?.parameters}{ANSICodes.Reset}");
+
+string task4Parameters = task4.parameters;
 
 
+
+
+if (int.TryParse(task4Parameters, out int oddOrEven))
+        {
+            string result = CheckOddOrEven(oddOrEven);   
+        }
+
+static string CheckOddOrEven(int number)
+{
+    return (number % 2 == 0) ? "even" : "odd";
+}
+
+var anwser4 = CheckOddOrEven(oddOrEven);
+Console.WriteLine(anwser4);
+
+Response task4AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", anwser4)}");
+Console.WriteLine($"Answer: {Colors.Blue}{task4AnswerResponse}{ANSICodes.Reset}");
 
 class Task
 {
