@@ -7,19 +7,18 @@ Console.Clear();
 Console.WriteLine("Starting Examunit 2");
 
 // SETUP 
-const string myPersonalID = "44f424a3df706ad568149c2eb75e0d65d56ab9f15eae8a629e29b7913110bcd6"; // GET YOUR PERSONAL ID FROM THE ASSIGNMENT PAGE https://mm-203-module-2-server.onrender.com/
+const string myPersonalID = "44f424a3df706ad568149c2eb75e0d65d56ab9f15eae8a629e29b7913110bcd6"; 
 const string baseURL = "https://mm-203-module-2-server.onrender.com/";
-const string startEndpoint = "start/"; // baseURl + startEndpoint + myPersonalID
-const string taskEndpoint = "task/";   // baseURl + taskEndpoint + myPersonalID + "/" + taskID
+const string startEndpoint = "start/"; 
+const string taskEndpoint = "task/";   
 
 // Creating a variable for the HttpUtils so that we dont have to type HttpUtils.instance every time we want to use it
 HttpUtils httpUtils = HttpUtils.instance;
 
 //#### REGISTRATION
-// We start by registering and getting the first task
 Response startRespons = await httpUtils.Get(baseURL + startEndpoint + myPersonalID);
-Console.WriteLine($"Start:\n{Colors.Magenta}{startRespons}{ANSICodes.Reset}\n\n"); // Print the response from the server to the console
-string taskID = "otYK2"; // We get the taskID from the previous response and use it to get the task (look at the console output to find the taskID)
+Console.WriteLine($"Start:\n{Colors.Magenta}{startRespons}{ANSICodes.Reset}\n\n");
+string taskID = "otYK2";
 
 // FIRST TASK 
 
@@ -55,7 +54,7 @@ Console.WriteLine("\n-----------------------------------------------------------
 
 
 // SECOUND TASKS
-Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
+Response task2Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); 
 Task task2 = JsonSerializer.Deserialize<Task>(task2Response.content);
 Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task2?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task2?.parameters}{ANSICodes.Reset}");
 
@@ -87,7 +86,7 @@ Console.WriteLine("\n-----------------------------------------------------------
 
 
 // THIRD TASK
-Response task3Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
+Response task3Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); 
 Task task3 = JsonSerializer.Deserialize<Task>(task3Response.content);
 Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task3?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task3?.parameters}{ANSICodes.Reset}");
 
@@ -132,8 +131,12 @@ var answer3 = RomanToArabic(romanParameters); ;
 Response task3AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer3)}");
 Console.WriteLine($"Answer: {Colors.Blue}{task3AnswerResponse}{ANSICodes.Reset}");
 
+taskID = "";
 
 Console.WriteLine("\n----------------------------------------------------------------------\n");
+
+// FOURTH TASK
+
 
 
 
