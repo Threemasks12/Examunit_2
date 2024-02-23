@@ -22,6 +22,7 @@ Console.WriteLine($"Start:\n{Colors.Magenta}{startRespons}{ANSICodes.Reset}\n\n"
 string taskID = "otYK2"; // We get the taskID from the previous response and use it to get the task (look at the console output to find the taskID)
 
 // FIRST TASK 
+
 Response task1Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonalID + "/" + taskID); // Get the task from the server
 Console.WriteLine(task1Response);
 
@@ -68,13 +69,14 @@ foreach (string numStr in numberString)
 {
     string trimmedNumbersString = numStr.Trim();
 
-    if(int.TryParse(trimmedNumbersString, out int number))
+    if (int.TryParse(trimmedNumbersString, out int number))
     {
         sum += number;
     }
 }
 
 var answer2 = sum;
+
 Response task2AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer2)}");
 Console.WriteLine($"Answer: {Colors.Cyan}{task2AnswerResponse}{ANSICodes.Reset}");
 
@@ -89,6 +91,49 @@ Response task3Response = await httpUtils.Get(baseURL + taskEndpoint + myPersonal
 Task task3 = JsonSerializer.Deserialize<Task>(task3Response.content);
 Console.WriteLine($"TASK: {ANSICodes.Effects.Bold}{task3?.title}{ANSICodes.Reset}\n{task2?.description}\nParameters: {Colors.Yellow}{task3?.parameters}{ANSICodes.Reset}");
 
+string romanParameters = task3.parameters;
+
+int arabicNumbers = RomanToArabic(romanParameters);
+
+static int RomanToArabic(string romanParameters)
+{
+    var romanValues = new System.Collections.Generic.Dictionary<char, int>
+    {
+        { 'I', 1},
+        { 'V', 5},
+        { 'X', 10},
+        { 'L', 50},
+        { 'C', 100},
+        { 'D', 500}
+    };
+
+    int sumOfRoman = 0;
+
+    for (int i = 0; i < romanParameters.Length; i++)
+    {
+        int currentValue = romanValues[romanParameters[i]];
+
+        if (i + 1 < romanParameters.Length && romanValues[romanParameters[i + 1]] > currentValue)
+        {
+            sumOfRoman -= currentValue;
+        }
+        else
+        {
+            sumOfRoman += currentValue;
+        }
+    }
+
+    return sumOfRoman;
+}
+
+
+var answer3 = RomanToArabic(romanParameters); ;
+
+Response task3AnswerResponse = await httpUtils.Post(baseURL + taskEndpoint + myPersonalID + "/" + taskID, $"{string.Join(",", answer3)}");
+Console.WriteLine($"Answer: {Colors.Blue}{task3AnswerResponse}{ANSICodes.Reset}");
+
+
+Console.WriteLine("\n----------------------------------------------------------------------\n");
 
 
 
